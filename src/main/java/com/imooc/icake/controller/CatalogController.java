@@ -22,7 +22,7 @@ public class CatalogController {
     //打开分类列表：/admin/Catalog/list.do
     public void list(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         Catalog root = catalogBiz.getRoot();
-        request.setAttribute("root", root);
+        request.getServletContext().setAttribute("root", root);
         request.getRequestDispatcher("/WEB-INF/pages/admin/catalog_list.jsp").forward(request, response);
     }
 

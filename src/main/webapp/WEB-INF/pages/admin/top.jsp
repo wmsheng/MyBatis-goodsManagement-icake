@@ -34,9 +34,9 @@
                             <img src="/images/head.jpg" class="img-responsive">
                         </a>
                         <div class="media-body">
-                            <div class="media-author">管理员</div>
+                            <div class="media-author">${ACCOUNT.nickName}</div>
                             <div class="media-links">
-                                <a href="login.html">退出</a>
+                                <a href="/quit.do">退出</a>
                             </div>
                         </div>
                     </div>
@@ -53,13 +53,13 @@
             <ul class="nav sidebar-menu">
                 <li class="sidebar-label pt20">商品管理</li>
                 <li class="active">
-                    <a href="cake_list.html">
+                    <a href="/admin/Cake/list.do">
                         <span class="glyphicon glyphicon-book"></span>
                         <span class="sidebar-title">商品列表</span>
                     </a>
                 </li>
                 <li>
-                    <a href="cake_add.html">
+                    <a href="/admin/Cake/toAdd.do">
                         <span class="glyphicon glyphicon-home"></span>
                         <span class="sidebar-title">商品上架</span>
                     </a>

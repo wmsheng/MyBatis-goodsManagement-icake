@@ -19,6 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -44,12 +45,29 @@ public class CakeController {
 
     // /admin/Cake/toAdd.do
     public void toAdd(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        Catalog root = catalogBiz.getRoot();
-        request.setAttribute("root",root);
+
         request.getRequestDispatcher("/WEB-INF/pages/admin/cake_add.jsp").forward(request,response);
     }
     // /admin/Cake/add.do
     public void add(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, FileUploadException {
+        Cake cake = this.builderCake(request);
+        cakeBiz.add(cake);
+        response.sendRedirect("list.do");
+    }
+    // /admin/Cake/toEdit.do
+    public void toEdit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Cake cake = cakeBiz.get(id);
+        request.setAttribute("cake",cake);
+        request.getRequestDispatcher("/WEB-INF/pages/admin/cake_edit.jsp").forward(request,response);
+    }
+    // /admin/Cake/edit.do
+    public void edit(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException, FileUploadException {
+        Cake cake = this.builderCake(request);
+        cakeBiz.edit(cake);
+        response.sendRedirect("list.do");
+    }
+    private Cake builderCake(HttpServletRequest request) throws FileUploadException, UnsupportedEncodingException {
         Cake cake = new Cake();
         cake.setTitle(request.getParameter("title"));
         FileItemFactory factory = new DiskFileItemFactory();
@@ -98,14 +116,20 @@ public class CakeController {
 
             }
         }
-
-        cakeBiz.add(cake);
-        response.sendRedirect("list.do");
-
+        return cake;
     }
-    // /admin/Cake/toEdit.do
-    // /admin/Cake/edit.do
-    // /admin/Cake/remove.do
-    // /admin/Cake/detail.do
 
+    // /admin/Cake/remove.do
+    public void remove(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        cakeBiz.remove(id);
+        response.sendRedirect("list.do");
+    }
+    // /admin/Cake/detail.do
+    public void detail(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int id = Integer.parseInt(request.getParameter("id"));
+        Cake cake = cakeBiz.get(id);
+        request.setAttribute("cake",cake);
+        request.getRequestDispatcher("/WEB-INF/pages/admin/cake_detail.jsp").forward(request,response);
+    }
 }

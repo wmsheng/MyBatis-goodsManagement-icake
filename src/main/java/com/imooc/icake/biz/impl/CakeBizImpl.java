@@ -32,4 +32,19 @@ public class CakeBizImpl implements CakeBiz {
     public List<Cake> getAll() {
         return cakeDao.selectAll();
     }
+
+    public Cake getSpecial() {
+        List<Cake> list = cakeDao.selectByStatus("特卖");
+        if (list.size() > 0)
+            return list.get(0);
+        return null;
+    }
+
+    public List<Cake> getForIndex() {
+        return cakeDao.selectByStatus("推荐");
+    }
+
+    public List<Cake> getForCatalog(int cid) {
+        return cakeDao.selectByCid(cid);
+    }
 }
